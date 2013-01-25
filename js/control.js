@@ -33,17 +33,16 @@ control = {
 
     movegrid: function() {
 
-        for (var y = this.maxY; y > 0; y--) {
-            for (var x = 0; x <= this.maxX; x++) {
-                this.grid[y][x] = this.grid[y-1][x];
-            }
-        }
-
         var zMod = control.height*0.0833;
+        this.grid.pop();
+
+        var newRow = [];
 
         for (var x = 0; x <= this.maxX; x++) {
-            this.grid[0][x] = Math.floor(Math.random()*zMod*2) - zMod;
+            newRow.push(Math.floor(Math.random()*zMod*2) - zMod);
         }
+
+        this.grid.unshift(newRow);
 
     }
 
