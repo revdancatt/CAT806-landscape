@@ -1,8 +1,11 @@
+int tempHue;
+
 void setup() 
 {
     size(control.width, control.height, OPENGL);  // Size should be the first statement
     frameRate(24);
     control.makegrid();
+    colorMode(HSB, 100);
 }
 
 void draw() 
@@ -30,7 +33,10 @@ void draw()
     for (int y = 0; y <= control.maxY-1; y++) {
         for (int x = 0; x <= control.maxX-1; x++) {
 
-            fill(0+((y+1)*(255/control.maxY)), 0+((y+1)*(255/control.maxY)) / 2, 0);
+            tempHue = control.hue - y;
+            if (tempHue < 1) tempHue = tempHue + 100;
+
+            fill(tempHue, 100, ((y+1)*(100/control.maxY)));
 
             beginShape(TRIANGLES);
             vertex((x-(control.maxX/2)+0)*width*0.0625, (y+0)*height*0.0833, control.grid[y+0][x+0]);
@@ -49,6 +55,9 @@ void draw()
 
 
     control.deg++;
+    control.hue++;
+    if (control.hue > 100) control.hue = 1;
+
   }
 
 }

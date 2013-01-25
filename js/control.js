@@ -7,6 +7,7 @@ control = {
     height: 480,
     maxX: 26,
     maxY: 18,
+    hue: 1,
 
     init: function() {
 
