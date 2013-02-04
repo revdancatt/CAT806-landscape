@@ -3,8 +3,8 @@ control = {
     pause: false,
     deg: 0,
     grid: [],
-    width: 640,
-    height: 480,
+    width: 320,
+    height: 240,
     maxX: 26,
     maxY: 18,
     hue: 1,
@@ -35,8 +35,10 @@ control = {
     movegrid: function() {
 
         var zMod = control.height*0.0833;
-        this.grid.pop();
+        var oldRow = this.grid.pop();
+        this.grid.unshift(oldRow);
 
+        /*
         var newRow = [];
 
         for (var x = 0; x <= this.maxX; x++) {
@@ -44,7 +46,12 @@ control = {
         }
 
         this.grid.unshift(newRow);
+        */
 
+    },
+
+    blur: function() {
+        //stackBlurCanvasRGB( 'processing_target', 0, 0, this.width, this.height, 1 );
     }
 
 };

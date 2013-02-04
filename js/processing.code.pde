@@ -27,7 +27,7 @@ void draw()
 
     //  horizontal line
     rotateX(radians(55));
-    rotateY(sin(radians(control.deg))*0.33);
+    //rotateY(sin(radians(control.deg))*0.33);
     translate(0, -height * 0.92, 0);
 
     for (int y = 0; y <= control.maxY-1; y++) {
@@ -51,6 +51,9 @@ void draw()
             endShape();
 
         }
+
+        blur();
+
     }
 
 
@@ -60,4 +63,8 @@ void draw()
 
   }
 
+}
+
+void blur() {
+    loadPixels();
 }
