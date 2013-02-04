@@ -43,8 +43,7 @@ control = {
 		ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
 
-
-		//	move through the rows
+		//	YES, THIS CODE IS A SHAMBLES, WILL CLEAN IT UP SOON.
 		var row = null;
 		var h = null;
 		var w = null;
@@ -56,6 +55,7 @@ control = {
 		var widthMod = 20;
 
 
+		//	move through the rows
 		for (y in this.rows) {
 
 			y = parseInt(y, 10);
@@ -92,6 +92,7 @@ control = {
 				bottomRightX = w + (this.pointBasePosition[x+1] * row2.position/widthMod) + this.pointBasePosition[x+1];
 				bottomRightY = h2 - (row2.points[x+1] * heightMod) + (row2.position * heightMod);
 
+				//	AND THIS IS SHAMBOLIC TOO, TODO: CLEAN ME
 				l = ((topRightY - horizon) / (this.canvas.height - horizon) * 50);
 				l2 = ((topRightY - horizon) / (this.canvas.height - horizon)) * 100;
 				hue = this.hue + y;
