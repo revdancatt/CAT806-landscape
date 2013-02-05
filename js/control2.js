@@ -199,7 +199,7 @@ control = {
 				//	for various dull reasons. Anyway, this means we're reducing the "pop in" of the
 				//	far bit of landscape (but not by much) by making it the same colour as the
 				//	background
-				l = ((topRight.y - horizon) / (this.canvas_back.height - horizon) * 70);
+				l = ((topRight.y - horizon) / (this.canvas_back.height - horizon) * 70) + 10;
 				l2 = ((topRight.y - horizon) / (this.canvas_back.height - horizon)) * 100;
 
 				//	I want each row of the landscape to be a slighty different hue, so
