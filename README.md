@@ -18,5 +18,5 @@ http://revdancatt.github.com/CAT806-landscape/panels.html
 
 TO-DO:
 
-1) ~~Shed load of optimisation and cheating to make it run smoother.~~
-2) A sky, because that may be nice. 
+1. ~~Shed load of optimisation and cheating to make it run smoother.~~
+2. A sky, because that may be nice. 
