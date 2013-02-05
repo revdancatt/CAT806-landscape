@@ -18,8 +18,10 @@ body, html {
 	border: 0;
 }
 
-.background {
-	background-image:url('../img/interlace.png');
+@media only screen (min-device-width: 1024px) {
+	.background {
+		background-image:url('../img/interlace.png');
+	}
 }
 
 .vignette {
