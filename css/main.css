@@ -13,20 +13,18 @@ body, html {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
-	height: 100%;
 	border: 0;
+}
+
+.fullscreen {
+	width: 100%;
+	height: 100%;	
 }
 
 @media only screen (min-device-width: 1024px) {
 	.background {
 		background-image:url('../img/interlace.png');
 	}
-}
-
-.vignette {
-	height: 100%;
-	width: 100%;
 }
 
 #landscape_back {

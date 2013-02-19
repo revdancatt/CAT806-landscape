@@ -6,8 +6,18 @@ control = {
 	hue: 0,
 	startTime: null,
 	frames: 0,
+	frameTmr: null,
 
 	init: function() {
+
+		//	if we are running fullscreen make them fullscreen
+		if (FULLSCREEN) {
+			$('.landscape').addClass('fullscreen');
+			$('.vignette').addClass('fullscreen');
+			$('.background').addClass('fullscreen');
+		} else {
+			$('.vignette').addClass('hidden');
+		}
 
 		//	Grab the three stacked canvas elements
 		this.canvas_back = document.getElementById('landscape_back');
@@ -18,7 +28,7 @@ control = {
 		this.startTime = new Date();
 
 		//	and let's aim for 25 frames per second (1000ms / 25 = 40ms)
-		setInterval(function() {control.drawFrame();}, 40);
+		control.drawFrame();
 
 	},
 
@@ -45,7 +55,8 @@ control = {
 			//	Fill the points with new random heights, enought
 			//	points across to match the pointBasePosition array
 			for (var x = 0; x <= this.pointBasePosition.length; x++) {
-            	newRow.points.push(Math.floor(Math.random()*zMod*2)-zMod);
+            	newRow.points.push(Math.sin(this.frames/100*x/2) * (zMod*2*Math.sin(this.frames)));
+            	//newRow.points.push(Math.floor(Math.random()*zMod*2)-zMod);
             }
 
             //	push the row into the stack of rows (the landscape startes at
@@ -63,6 +74,11 @@ control = {
 		this.ctx_back.clearRect(0, 0, this.canvas_back.width, this.canvas_back.height);
 		this.ctx_middle.clearRect(0, 0, this.canvas_back.width, this.canvas_back.height);
 		this.ctx_front.clearRect(0, 0, this.canvas_back.width, this.canvas_back.height);
+
+		if (SAVEFRAMES) {
+			this.ctx_front.fillStyle = '#FFF';
+			this.ctx_front.fillRect(0, 0, this.canvas_back.width, this.canvas_back.height);
+		}
 
 
 		//	These vars are going to hold values set in the loops below
@@ -94,7 +110,7 @@ control = {
 		//	adjusting these numbers until it just looks right we
 		//	get the 3D effect.
 		var heightMod = 2;
-		var widthMod = 20;
+		var widthMod = 15;
 
 		//	Each quad is going to have four corners which will
 		//	of course have x,y co-ords. In real 3D world the
@@ -217,9 +233,10 @@ control = {
 				//	changed the rate at which rows got added to the scene and the speed at which
 				//	they travelled we'd have to tweek these. There is not science.
 				ctx = this.ctx_front;
-				if (y < 8) ctx = this.ctx_middle;
-				if (y < 5) ctx = this.ctx_back;
-
+				if (BLUR) {
+					if (y < 7) ctx = this.ctx_middle;
+					if (y < 3) ctx = this.ctx_back;
+				}
 				//	Now we actually draw the quad, because of the way we've done the
 				//	maths (i.e cheated) to calculate the colour of the quad we have
 				//	a lighter colour if the topleft corner is higher than the topright
@@ -239,6 +256,7 @@ control = {
 
 			}
 
+			
 		}
 
 		//	Now we go thru all the rows adjusting their position
@@ -257,7 +275,7 @@ control = {
 			//	you can tweek this value to make this better/worse :)
 			//	But you'll also need to modify the values used to decide
 			//	if you should draw on the back/middle/front canvas
-			row.position = row.position * 1.06;
+			row.position = row.position * 1.08;
 			
 			//	increase the age of the row (we don't do anything with
 			//	this, but it could be kinda useful oneday)
@@ -294,6 +312,40 @@ control = {
 		this.frames++;
 		document.getElementById('fps').innerHTML = 'fps: ' + Math.floor(this.frames / (new Date() - this.startTime) * 10000) / 10;
 
+		//	see if we need to save the frame
+		//	This all depends on having the nodejs server running on port 8987 that
+		//	will save the image
+		if (SAVEFRAMES && this.frames >= 100) {
+
+			var strDataURI = document.getElementById('landscape_front').toDataURL();
+
+			var url = "http://localhost:8987/?callback=?";
+			var params = {
+				"frame": (this.frames) - 100,
+				"data": strDataURI
+			};
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: params,
+		        success:
+        			function(json) {
+						if (control.frames < (2520 + 100)) {
+							setTimeout(function() { control.drawFrame() }, 40);
+						}
+        			}
+        		,
+        		error:
+        			function() {
+        				utils.log('Missed: ' + control.frames);
+						if (control.frames < (2520 + 100)) {
+							setTimeout(function() { control.drawFrame() }, 40);
+						}
+        			}
+        		})
+		} else {
+			setTimeout(function() { control.drawFrame() }, 40);
+		}
 	}
 
 

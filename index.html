@@ -14,11 +14,16 @@
 
     <div id="fps"></div>
 
-    <script src="js/StackBlur.js"></script>
-
+    <script src="js/jquery-1.8.1.min.js"></script> 
     <script src="js/control2.js?v=0.3"></script>
     <script>
-        control.init();
+        var BLUR = true;
+        var FULLSCREEN = true;
+        var SAVEFRAMES = false;
+
+        $(document).ready(function() {
+            control.init();
+        });
     </script>    
 </body>
 
