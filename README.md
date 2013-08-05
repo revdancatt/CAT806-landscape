@@ -1,4 +1,6 @@
-CAT806-landscape
+![Screen Shot](http://cattopus23.com/img/panel-CAT806.jpg)
+
+CAT806 Landscape
 ================
 
 ~~It's getting cold, I needed something to keep myself warm this evening and since I have Flash turned off I thought WebGL would do the trick.~~
